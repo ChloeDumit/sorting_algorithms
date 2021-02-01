@@ -1,44 +1,80 @@
 #include "sort.h"
 /**
- * insertion_sort- quick sort algorithm
+ * partition- quick sort algorithm
  * @array: array
+ * @first: first
+ * @last: last;
  * @size: size
  * Return: sorted array
  */
-void swap(int *array, int position1, int position2)
+int partition(int *array, int first, int last, size_t size)
 {
-    int temp = array[position1];
+    int pivot = array[last];
+    int i = first;
+    int temp;
+    int j;
 
-    array[position1] = array[position2];
-    array[position2] = temp;
+    for (j = first; j <= last; j++)
+    {
+        if(pivot > array[j])
+        {
+            
+            temp = array[j];
+            array[j] = array[i];
+            array[i] = temp;
+            print_array(array, size);
+
+            i++;
+            
+        }
+    }
+    temp = array[last];
+    array[last] = array[i];
+    array[i] = temp;
+
+    return(i);
 }
-
 /**
- * insertion_sort- quick sort algorithm
+ * myquicksort -  quick sort algorithm
+ *
+ * @array: data to sort
+ * @first: left pivote
+ * @last: right pivote
+ * @size: size input
+ * Return: No Return
+ */
+void myquicksort(int *array, int first, int last, size_t size)
+{
+    int position;
+
+    if (first < last)
+    {
+        position = partition(array, first, last, size);
+        myquicksort(array, first, position - 1, size);
+        myquicksort(array, position + 1, last, size);
+    }
+
+
+
+
+}
+/**
+ * quick_sort- quick sort algorithm
  * @array: array
  * @size: size
  * Return: sorted array
  */
 void quick_sort(int *array, size_t size)
-{   
-    size_t first, mover, pivot;
-    pivot = array[size - 1];
-    first = array[0 - 1];
+{
+    if (size < 2)
+    {
+        return;
+    }
 
-        for (mover = 0; mover <= pivot - 1; mover++)
-        {
-            if(array[mover] <= array[pivot])
-            {
-                first++;
-                swap(array, first, mover);
-                print_array(array, size);
-            }
-        }    
-        swap(array, [first + 1, pivot);
-        print_array(array, size);
-        
+    myquicksort(array, 0, size - 1, size);
 
+    
+
+    
 }
-
-
 
